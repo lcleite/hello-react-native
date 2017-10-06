@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor" tools:targetApi="21">#1DA1D2</item>
+    </style>
+
+</resources>
