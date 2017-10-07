@@ -9,7 +9,7 @@ import {ColorAsset} from "../values/ColorAsset";
 
 export default class MainScene extends Component{
 
-  lastQuery; //:string
+  lastQuery = ""; //:string
 
   state = {
     tweets: [],
@@ -62,7 +62,8 @@ export default class MainScene extends Component{
   }
 
   refreshQuery(){
-    this._getTweets(this.lastQuery);
+    if (this.lastQuery.length > 0)
+      this._getTweets(this.lastQuery);
   }
 
   //@_showClearIcon() -> Object | boolean
