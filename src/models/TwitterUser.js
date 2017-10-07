@@ -28,12 +28,4 @@ export default class TwitterUser{
   set userProfileImageUrl(value) {
     this._userProfileImageUrl = value;
   }
-
-  toString() {
-    return "TwitterUser{" +
-      "userName='" + this.userName + '\'' +
-      ", userScreenName='" + this.userScreenName + '\'' +
-      ", userProfileImageUrl='" + this.userProfileImageUrl + '\'' +
-      '}';
-  }
 }

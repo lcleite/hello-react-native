@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import CircularImage from "./CircularImage";
 import {ColorAsset} from "../values/ColorAsset";
@@ -8,17 +9,21 @@ import DateUtils from "../utils/DateUtils";
 
 export default class TweetListItem extends PureComponent{
 
-  item;
+  item; //:Tweet
 
   constructor(props){
     super(props);
-
     this.item = props.item;
-    this._getMediaType = this._getMediaType.bind(props);
-    this._itemHasMedia = this._itemHasMedia.bind(props);
+    this._bindMethods();
   }
 
-  _onPressItem = () => {
+  _bindMethods() {
+    this._onPressItem = this._onPressItem.bind(this);
+    this._getMediaType = this._getMediaType.bind(this);
+    this._itemHasMedia = this._itemHasMedia.bind(this);
+  }
+
+  _onPressItem(){
     this.props.onPressItem(this.item);
   };
 
@@ -113,3 +118,7 @@ const styles = StyleSheet.create({
     display: 'none'
   }
 });
+
+TweetListItem.propTypes = {
+  item: PropTypes.any.isRequired,
+};

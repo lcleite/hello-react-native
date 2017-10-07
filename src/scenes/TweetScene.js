@@ -9,26 +9,27 @@ import {ImageAsset} from "../values/ImageAsset";
 
 export default class TweetScene extends Component{
 
+  tweet; //:Tweet
+
   state = {
     loadingMedia: true
   };
 
-  tweet; //:Tweet
-
   constructor(props) {
     super(props);
     this.tweet = props.tweet;
+    this._bindMethods();
+  }
 
+  _bindMethods() {
     this._getTweetHashtags = this._getTweetHashtags.bind(this);
     this._getTweetMentions = this._getTweetMentions.bind(this);
     this._getTweetLinks = this._getTweetLinks.bind(this);
-
     this._tweetHasMedia = this._tweetHasMedia.bind(this);
     this._tweetHasHashtags = this._tweetHasHashtags.bind(this);
     this._tweetHasMentions = this._tweetHasMentions.bind(this);
     this._tweetHasLinks = this._tweetHasLinks.bind(this);
     this._getTweetClickableLinks = this._getTweetClickableLinks.bind(this);
-
     this._tweetHasLoadedVideo = this._tweetHasLoadedVideo.bind(this);
     this._playVideo = this._playVideo.bind(this);
   }
@@ -83,21 +84,6 @@ export default class TweetScene extends Component{
     Linking.openURL(this.tweet.media.videoUrl);
   };
 
-  //@_getTweetClickableLinks() -> Component[]
-  _getTweetClickableLinks(){
-    const clickableLinks = this.tweet.content.links.map((link, index) => {
-      return(
-        <TouchableWithoutFeedback key={index} onPress={() => Linking.openURL(link)}>
-          <View>
-            <Text style={styles.link}>{link}</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      );
-    });
-
-    return clickableLinks;
-  }
-
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -139,6 +125,21 @@ export default class TweetScene extends Component{
         </View>
       </ScrollView>
     );
+  }
+
+  //@_getTweetClickableLinks() -> Component[]
+  _getTweetClickableLinks(){
+    const clickableLinks = this.tweet.content.links.map((link, index) => {
+      return(
+        <TouchableWithoutFeedback key={index} onPress={() => Linking.openURL(link)}>
+          <View>
+            <Text style={styles.link}>{link}</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      );
+    });
+
+    return clickableLinks;
   }
 }
 

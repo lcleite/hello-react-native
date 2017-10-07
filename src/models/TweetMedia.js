@@ -27,12 +27,4 @@ export default class TweetMedia{
   set videoUrl(value) {
     this._videoUrl = value;
   }
-
-  toString() {
-    return "TweetMedia{" +
-      "type=" + this.type +
-      ", photoUrl='" + this.photoUrl + '\'' +
-      ", videoUrl='" + this.videoUrl + '\'' +
-      '}';
-  }
 }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {View, FlatList, RefreshControl} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import TweetListItem from "./TweetListItem";
@@ -9,7 +10,10 @@ export default class TweetList extends Component{
 
   constructor(props){
     super(props);
+    this._bindMethods();
+  }
 
+  _bindMethods() {
     this._getRefreshControl = this._getRefreshControl.bind(this);
   }
 
@@ -23,9 +27,7 @@ export default class TweetList extends Component{
         <FlatList
           data={this.props.data}
           extraData={this.props}
-          renderItem={({ item }) => (
-            <TweetListItem item={item} onPressItem={this._onPressItem}/>
-          )}
+          renderItem={({item}) => <TweetListItem item={item} onPressItem={this._onPressItem}/>}
           ItemSeparatorComponent={TweetListSeparator}
           keyExtractor={(item, index) => index}
           refreshControl={this._getRefreshControl()}
@@ -44,3 +46,9 @@ export default class TweetList extends Component{
     );
   }
 }
+
+TweetList.propTypes = {
+  data: PropTypes.array,
+  refreshing: PropTypes.bool,
+  onRefresh: PropTypes.any,
+};

@@ -1,9 +1,9 @@
 
 import React, {Component} from 'react';
-import {StyleSheet, AsyncStorage, View, Slider, Text} from 'react-native'
+import {StyleSheet, View, Slider, Text} from 'react-native'
 import {ColorAsset} from "../values/ColorAsset";
-import StorageKey from "../values/StorageKey";
 import PlatformUtils from "../utils/PlatformUtils";
+import StorageUtils from "../utils/StorageUtils";
 
 export default class SettingsScene extends Component{
 
@@ -13,7 +13,10 @@ export default class SettingsScene extends Component{
 
   constructor(props){
     super(props);
+    this._bindMethods();
+  }
 
+  _bindMethods() {
     this._sliderValueUpdate = this._sliderValueUpdate.bind(this);
   }
 
@@ -22,10 +25,7 @@ export default class SettingsScene extends Component{
   }
 
   async _getOptionValueFromStorage(){
-    let optionValue = await AsyncStorage.getItem(StorageKey.maxTweets);
-    if(optionValue == null)
-      optionValue = "10";
-
+    let optionValue = await StorageUtils.getMaxTweetsOptionValue();
     this._sliderValueUpdate(Number.parseInt(optionValue));
   }
 
@@ -48,7 +48,7 @@ export default class SettingsScene extends Component{
   }
 
   componentWillUnmount(){
-    AsyncStorage.setItem(StorageKey.maxTweets, this.state.optionValue.toString());
+    StorageUtils.setMaxTweetsOptionValue(this.state.optionValue);
   }
 
   render() {

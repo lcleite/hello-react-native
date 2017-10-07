@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, View, Image} from 'react-native';
 import {ImageAsset} from "../values/ImageAsset";
 
@@ -10,7 +11,10 @@ export default class CircularImage extends Component{
 
   constructor(props){
     super(props);
+    this._bindMethods();
+  }
 
+  _bindMethods() {
     this._getImageFromUrl = this._getImageFromUrl.bind(this);
   }
 
@@ -39,13 +43,6 @@ const styles = StyleSheet.create({
   }
 });
 
-/*
- ImageDownLoader.propTypes = {
- imageURL:  React.PropTypes.string.isRequired,
- imageStyle : React.PropTypes.any.isRequired,
- defaultImage : React.PropTypes.any,
- renderProcess : React.PropTypes.bool,
- renderDefaultImage : React.PropTypes.bool,
- renderFailedImage : React.PropTypes.bool
- };
- */
+CircularImage.propTypes = {
+  url: PropTypes.string
+};

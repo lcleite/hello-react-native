@@ -1,5 +1,4 @@
 export default class TweetContent{
-
   _text; //:string
   _links; //:string[]
   _hashtags; //string[]
@@ -41,14 +40,5 @@ export default class TweetContent{
 
   set userMentions(value) {
     this._userMentions = value;
-  }
-
-  toString() {
-    return "TweetContent{" +
-      "text='" + this.text + '\'' +
-      ", links=" + this.links +
-      ", hashtags=" + this.hashtags +
-      ", userMentions=" + this.userMentions +
-      '}';
   }
 }

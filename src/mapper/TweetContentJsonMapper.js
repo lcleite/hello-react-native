@@ -3,7 +3,7 @@ import TweetContent from "../models/TweetContent";
 
 export default class TweetContentJsonMapper extends JsonMapper{
 
-  //@toModel(jsonObject: JSONObject) -> TweetContent
+  //@toModel(jsonObject: Object) -> TweetContent
   toModel(jsonObject) {
     let tweetContent = new TweetContent();
     let entities = jsonObject["entities"];
@@ -16,43 +16,28 @@ export default class TweetContentJsonMapper extends JsonMapper{
     return tweetContent;
   }
 
-
-  //@_getLinks(urls: JSONArray) -> string[]
+  //@_getLinks(urls: Object[]) -> string[]
   _getLinks(urls) {
-    let links = [];
-
-    for(let i = 0; i < urls.length ; i++){
-      let url = urls[i];
-
-      links.push(url["expanded_url"]);
-    }
-
-    return links;
+    return this._getStringsFromArrayWithKey(urls, "expanded_url");
   }
 
-  //@_getUserMentions(userMentions: JSONArray) -> string[]
+  //@_getUserMentions(userMentions: Object[]) -> string[]
   _getUserMentions(userMentions) {
-    let users = [];
-
-    for(let i = 0; i < userMentions.length ; i++){
-      let user = userMentions[i];
-
-      users.push(user["screen_name"]);
-    }
-
-    return users;
+    return this._getStringsFromArrayWithKey(userMentions, "screen_name");
   }
 
-  //@_getHashtags(hashtags: JSONArray) -> string[]
+  //@_getHashtags(hashtags: Object[]) -> string[]
   _getHashtags(hashtags) {
-    let tags = [];
+    return this._getStringsFromArrayWithKey(hashtags, "text");
+  }
 
-    for(let i = 0; i < hashtags.length ; i++){
-      let tag = hashtags[i];
+  //@_getStringsFromArrayWithKey(array: Object[]) -> string[]
+  _getStringsFromArrayWithKey(array, key){
+    let strings = [];
 
-      tags.push(tag["text"]);
-    }
+    for(let obj of array)
+      strings.push(obj[key]);
 
-    return tags;
+    return strings;
   }
 }
