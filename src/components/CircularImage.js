@@ -23,7 +23,6 @@ export default class CircularImage extends Component{
   }
 
   render() {
-    console.log(this.props.url);
     return (
       <Image style={styles.circularImage}
              source={this._getImageFromUrl()}

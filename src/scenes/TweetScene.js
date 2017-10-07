@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView, View, Text, Image, ActivityIndicator, TouchableWithoutFeedback, Linking} from 'react-native';
+import {Platform, StyleSheet, ScrollView, View, Text, Image, ActivityIndicator, TouchableWithoutFeedback, Linking} from 'react-native';
 import CircularImage from "../components/CircularImage";
 import DateUtils from "../utils/DateUtils";
 import {ColorAsset} from "../values/ColorAsset";
@@ -115,9 +115,10 @@ export default class TweetScene extends Component{
             <View style={this._tweetHasMedia() ? styles.mediaContainer : styles.displayNone}>
                 <ActivityIndicator size="large" color={ColorAsset.colorPrimary}
                                    style={this.state.loadingMedia ? styles.loadingIndicator : styles.displayNone}/>
-                <Image style={this.state.loadingMedia ? styles.displayNone : styles.mediaImage}
+                <Image style={this.state.loadingMedia ? styles.displayNoneImageLoading : styles.mediaImage}
                        source={{uri: this.tweet.media.photoUrl}}
-                       resizeMode="contain" onLoad={() => this.setState({loadingMedia: false})}/>
+                       resizeMode="contain" onLoad={() => this.setState({loadingMedia: false})
+                       }/>
                 <Image style={this._tweetHasLoadedVideo() ? styles.mediaPlayButton : styles.displayNone}
                        source={ImageAsset.videoPlay}/>
             </View>
@@ -189,8 +190,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     alignSelf: 'stretch',
-  },loadingIndicator2: {
-    position: 'absolute'
   },
   mediaImage: {
     flex: 1,
@@ -207,5 +206,16 @@ const styles = StyleSheet.create({
   },
   displayNone: {
     display: 'none'
+  },
+  displayNoneImageLoading: {
+    ...Platform.select({
+      ios: {
+        width: 1,
+        height: 1,
+      },
+      android: {
+        display: 'none'
+      },
+    })
   }
 });

@@ -10,7 +10,7 @@ export default class TwitterUserJsonMapper extends JsonMapper{
 
     twitterUser.userName = user["name"];
     twitterUser.userScreenName = user["screen_name"];
-    twitterUser.userProfileImageUrl = user["profile_image_url_https"];
+    twitterUser.userProfileImageUrl = user["profile_image_url"];
 
     return twitterUser;
   }

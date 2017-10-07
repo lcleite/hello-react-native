@@ -104,11 +104,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     // Android
     elevation: 4,
-    // iOS
-    // shadowColor: '#000',
-    // shadowOffset: { width: 0, height: 10 },
-    // shadowOpacity: 0.8,
-    // shadowRadius: 2,
   },
   inputStyle: {
     backgroundColor: ColorAsset.white,

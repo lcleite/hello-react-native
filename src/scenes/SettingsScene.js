@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {StyleSheet, AsyncStorage, View, Slider, Text} from 'react-native'
 import {ColorAsset} from "../values/ColorAsset";
 import StorageKey from "../values/StorageKey";
+import PlatformUtils from "../utils/PlatformUtils";
 
 export default class SettingsScene extends Component{
 
@@ -32,6 +33,20 @@ export default class SettingsScene extends Component{
     this.setState({optionValue: value});
   };
 
+  _sliderMaximumColor(){
+    if (PlatformUtils.isPlatformIOS())
+      return ColorAsset.grayText;
+    else
+      return ColorAsset.colorPrimary;
+  }
+
+  _sliderMinimumColor(){
+    if (PlatformUtils.isPlatformIOS())
+      return ColorAsset.colorPrimary;
+    else
+      return ColorAsset.grayText;
+  }
+
   componentWillUnmount(){
     AsyncStorage.setItem(StorageKey.maxTweets, this.state.optionValue.toString());
   }
@@ -41,7 +56,8 @@ export default class SettingsScene extends Component{
       <View style={styles.container}>
         <Text style={styles.optionTitle}>Tweets</Text>
         <View style={{flexDirection: "row"}}>
-          <Slider style={{flex: 1}} thumbTintColor={ColorAsset.colorPrimary} maximumTrackTintColor={ColorAsset.colorPrimary}
+          <Slider style={{flex: 1}} thumbTintColor={ColorAsset.colorPrimary}
+                  minimumTrackTintColor={this._sliderMinimumColor()} maximumTrackTintColor={this._sliderMaximumColor()}
                   minimumValue={5} maximumValue={15}
                   value={this.state.optionValue} step={1} onValueChange={this._sliderValueUpdate}/>
           <Text style={styles.optionValue}>{this.state.optionValue}</Text>
