@@ -1,4 +1,4 @@
-package com.curso;
+package com.helloreactnative;
 
 import android.app.Application;
 
