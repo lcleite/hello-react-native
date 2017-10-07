@@ -10,7 +10,7 @@ export default class StorageUtils{
     if(optionValue == null)
       optionValue = defaultValue;
 
-    return optionValue;
+    return Number.parseInt(optionValue);
   }
 
   static async setMaxTweetsOptionValue(value){

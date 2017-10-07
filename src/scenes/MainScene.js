@@ -2,10 +2,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native'
 import {SearchBar} from 'react-native-elements'
-import TweetJsonMapper from "../mapper/TweetJsonMapper";
+import GetTweetsTask from "../tasks/GetTweetsTask";
 import TweetList from "../components/TweetList";
 import {ColorAsset} from "../values/ColorAsset";
-import StorageUtils from "../utils/StorageUtils";
 
 export default class MainScene extends Component{
 
@@ -29,31 +28,9 @@ export default class MainScene extends Component{
     this._showClearIcon = this._showClearIcon.bind(this);
   }
 
-  //TODO: create async
   async _getTweets(query) {
-    this.setState({refreshing: true, tweets: []});
-    const OAUTH2_TOKEN = "AAAAAAAAAAAAAAAAAAAAANKm2QAAAAAA4egRyibPOIGTFLzy%2BhDnYDdr62o%3DcGtYhty15tRTVLwWjWux3S2rcP4cLxGoFEgJcissPmYOYkSikA";
-    let response = await fetch("https://api.twitter.com/1.1/search/tweets.json?q=" + query, {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer ' + OAUTH2_TOKEN
-      }
-    });
-
-    let data = await response.json();
-    let optionValue = await StorageUtils.getMaxTweetsOptionValue();
-    let maxTweets = Number.parseInt(optionValue);
-
-    let tweetMapper = new TweetJsonMapper();
-    let tweetsData = data["statuses"];
-    let tweets = [];
-
-    for(let i = 0; i < tweetsData.length; i++){
-      if(i == maxTweets)
-        break;
-
-      tweets.push(tweetMapper.toModel(tweetsData[i]));
-    }
+    let task = new GetTweetsTask(query);
+    let tweets = await task.run();
 
     this.setState({refreshing: false, tweets: tweets});
   }
