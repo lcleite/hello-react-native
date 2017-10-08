@@ -4,22 +4,11 @@ import {StyleSheet, View, Image} from 'react-native';
 import {ImageAsset} from "../values/ImageAsset";
 
 export default class CircularImage extends Component{
-
   state = {
     showPlaceholder: true
   };
 
-  constructor(props){
-    super(props);
-    this._bindMethods();
-  }
-
-  _bindMethods() {
-    this._getImageFromUrl = this._getImageFromUrl.bind(this);
-  }
-
-  //@_getImageFromUrl() -> Image | Object{
-  _getImageFromUrl(){
+  _getImageFromUrl = () => {
     if(this.state.showPlaceholder)
       return ImageAsset.placeholder;
     else
@@ -34,12 +23,14 @@ export default class CircularImage extends Component{
     );
   }
 }
+// Better to maintain, in case you wanna change its radius.
+const radius = 48;
 
 const styles = StyleSheet.create({
   circularImage: {
-    width: 48,
-    height: 48,
-    borderRadius: 48/2
+    width: radius,
+    height: radius,
+    borderRadius: radius/2
   }
 });
 
